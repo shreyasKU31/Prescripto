@@ -1,9 +1,15 @@
+// Import mongoose to interact with MongoDB
 import mongoose from "mongoose";
 
+// Function to establish a connection to the MongoDB database
 const connectDB = async () => {
-    mongoose.connection.on('connected',() => console.log("Database Connected"))
+  // Event listener for when the connection to the database is successfully established
+  mongoose.connection.on("connected", () => console.log("Database Connected"));
 
-    await mongoose.connect(`${process.env.MONGODB_URI}/prescripto`);
-}
+  // Connecting to the MongoDB database using the URI from environment variables
+  // Appending "/prescripto" to the URI to specify the database name
+  await mongoose.connect(`${process.env.MONGODB_URI}/prescripto`);
+};
 
-export default connectDB
+// Exporting the connectDB function to be used elsewhere in the project
+export default connectDB;

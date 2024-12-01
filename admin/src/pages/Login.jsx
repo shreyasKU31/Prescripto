@@ -1,33 +1,41 @@
-import React, { useContext, useState } from "react";
-import { assets } from "../assets/assets";
-import { AdminContext } from "../context/AdminContext";
-import axios from "axios";
+// Import necessary dependencies
+import React, { useContext, useState } from "react"; // React and its hooks
+import { assets } from "../assets/assets"; // Import assets (if used later in the component)
+import { AdminContext } from "../context/AdminContext"; // Context to access admin-related data
+import axios from "axios"; // For making HTTP requests
 
+// Define the Login component
 const Login = () => {
+  // State to manage the login type (Admin or Doctor)
   const [state, setState] = useState("Admin");
 
+  // States to store the email and password input values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Extract values from the AdminContext
   const { setAToken, backendUrl } = useContext(AdminContext);
 
+  // Function to handle the form submission
   const onSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission behavior
 
     try {
       if (state === "Admin") {
+        // If the user is an Admin, make an API request to the admin login endpoint
         const { data } = await axios.post(backendUrl + "/api/admin/login", {
           email,
           password,
         });
 
         if (data.success) {
-          console.log(data.token);
+          console.log(data.token); // Log the received token (replace this with real handling, e.g., saving token)
         }
       } else {
+        // Add handling for Doctor login here (if applicable)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error); // Log any errors during the login process
     }
   };
 
