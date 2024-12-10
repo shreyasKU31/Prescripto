@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react"; // React and its hooks
 import { assets } from "../assets/assets"; // Import assets (if used later in the component)
 import { AdminContext } from "../context/AdminContext"; // Context to access admin-related data
 import axios from "axios"; // For making HTTP requests
+import { toast } from "react-toastify";
 
 // Define the Login component
 const Login = () => {
@@ -23,13 +24,19 @@ const Login = () => {
     try {
       if (state === "Admin") {
         // If the user is an Admin, make an API request to the admin login endpoint
-        const { data } = await axios.post(backendUrl + "/api/admin/login", {
-          email,
-          password,
-        });
+        const { data } = await axios.post(
+          "http://localhost:4000" + "/api/admin/login",
+          {
+            email,
+            password,
+          }
+        );
 
         if (data.success) {
-          console.log(data.token); // Log the received token (replace this with real handling, e.g., saving token)
+          localStorage.setItem("aToken", data.token);
+          setAToken(data.token); // Log the received token (replace this with real handling, e.g., saving token)
+        } else {
+          toast.error(data.message);
         }
       } else {
         // Add handling for Doctor login here (if applicable)

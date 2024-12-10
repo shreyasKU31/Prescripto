@@ -5,11 +5,12 @@ export const AdminContext = createContext();
 
 const AdminContextProvider = (props) => {
   // State to hold the authentication token for the admin
-  const [aToken, setAToken] = useState("");
+  const [aToken, setAToken] = useState(
+    localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
+  );
 
   // URL for the backend, obtained from environment variables
-  const backEndUrl = "http://localhost:4000";
-  console.log(backEndUrl);
+  const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Value to be provided to components that consume this context
   const value = {
