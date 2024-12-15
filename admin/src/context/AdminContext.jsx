@@ -10,7 +10,7 @@ const AdminContextProvider = (props) => {
   );
 
   // URL for the backend, obtained from environment variables
-  const backEndUrl = import.meta.env.VITE_BACKEND_URL;
+  const backEndUrl = import.meta.env.BACKEND_URL;
 
   // Value to be provided to components that consume this context
   const value = {
