@@ -1,4 +1,6 @@
 import React, { createContext, useState } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 // Create a context for the admin state management
 export const AdminContext = createContext();
@@ -8,15 +10,37 @@ const AdminContextProvider = (props) => {
   const [aToken, setAToken] = useState(
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
   );
+  const [doctors, setDoctors] = useState([]);
 
   // URL for the backend, obtained from environment variables
-  const backEndUrl = import.meta.env.BACKEND_URL;
+  const backEndUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const getAllDoctors = async () => {
+    try {
+      const { datas } = await axios.post(
+        "http://localhost:4000/api/admin/all-doctors",
+        {},
+        { headers: aToken }
+      );
+
+      if (datas.success) {
+        setDoctors(datas.doctors);
+      } else {
+        toast.error(datas.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error.message);
+    }
+  };
 
   // Value to be provided to components that consume this context
   const value = {
     aToken,
     setAToken,
     backEndUrl,
+    doctors,
+    getAllDoctors,
   };
 
   return (
