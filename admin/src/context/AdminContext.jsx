@@ -10,6 +10,7 @@ const AdminContextProvider = (props) => {
   const [aToken, setAToken] = useState(
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
   );
+
   const [doctors, setDoctors] = useState([]);
 
   // URL for the backend, obtained from environment variables
@@ -17,20 +18,38 @@ const AdminContextProvider = (props) => {
 
   const getAllDoctors = async () => {
     try {
-      const { datas } = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:4000/api/admin/all-doctors",
         {},
-        { headers: aToken }
+        { headers: { aToken } }
       );
 
-      if (datas.success) {
-        setDoctors(datas.doctors);
+      if (data.success) {
+        setDoctors(data.doctors);
       } else {
-        toast.error(datas.message);
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
-      console.log(error.message);
+    }
+  };
+
+  const changeAvailability = async (docId) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/api/admin/change-avilability",
+        { docId },
+        { headers: { aToken } }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+      getAllDoctors();
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -41,6 +60,7 @@ const AdminContextProvider = (props) => {
     backEndUrl,
     doctors,
     getAllDoctors,
+    changeAvailability,
   };
 
   return (

@@ -25,7 +25,7 @@ const Login = () => {
       if (state === "Admin") {
         // If the user is an Admin, make an API request to the admin login endpoint
         const { data } = await axios.post(
-          "http://localhost:4000" + "/api/admin/login",
+          "http://localhost:4000/api/admin/login",
           {
             email,
             password,
