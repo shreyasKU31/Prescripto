@@ -4,6 +4,7 @@ import dotenv from "dotenv"; // Importing dotenv to load environment variables
 import connectDB from "./config/mongoDB.js"; // Importing MongoDB connection configuration
 import connectCloudinary from "./config/cloudinary.js"; // Importing Cloudinary connection configuration
 import adminRouter from "./routes/adminRoute.js"; // Importing admin routes for handling admin actions
+import doctorRouter from "./routes/doctorRoute.js";
 
 // app Config
 const app = express(); // Creating an Express application instance
@@ -19,6 +20,7 @@ app.use(cors()); // Middleware to handle CORS (Cross-Origin Resource Sharing) fo
 // API endpoints
 app.use("/api/admin", adminRouter); // Routes for admin-related API calls, e.g., adding a doctor
 // Example: localhost:4000/api/admin/add-doctor
+app.use("/api/doctor", doctorRouter);
 
 app.get("/", (req, res) => {
   // Simple root endpoint that confirms the API is working
