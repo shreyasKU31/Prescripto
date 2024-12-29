@@ -5,6 +5,7 @@ import connectDB from "./config/mongoDB.js"; // Importing MongoDB connection con
 import connectCloudinary from "./config/cloudinary.js"; // Importing Cloudinary connection configuration
 import adminRouter from "./routes/adminRoute.js"; // Importing admin routes for handling admin actions
 import doctorRouter from "./routes/doctorRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 // app Config
 const app = express(); // Creating an Express application instance
@@ -21,6 +22,7 @@ app.use(cors()); // Middleware to handle CORS (Cross-Origin Resource Sharing) fo
 app.use("/api/admin", adminRouter); // Routes for admin-related API calls, e.g., adding a doctor
 // Example: localhost:4000/api/admin/add-doctor
 app.use("/api/doctor", doctorRouter);
+app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => {
   // Simple root endpoint that confirms the API is working
